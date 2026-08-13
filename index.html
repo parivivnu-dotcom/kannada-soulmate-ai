@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="kn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#17121f">
+<title>Kannada Soulmate AI</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Noto Sans Kannada",sans-serif;background:#0f0c14;color:#f7f3fa}
+.app{max-width:520px;margin:auto;min-height:100vh;background:#17121f}
+header{padding:18px 18px 12px;position:sticky;top:0;background:#17121fee;backdrop-filter:blur(10px);z-index:3}
+.brand{font-size:22px;font-weight:800}.sub{font-size:12px;opacity:.65;margin-top:3px}
+.tabs{display:flex;gap:8px;padding:10px 14px;position:sticky;top:76px;background:#17121f;z-index:2}
+.tabs button{flex:1;border:0;border-radius:14px;padding:11px;background:#282031;color:#eee;font-weight:700}
+.tabs button.active{background:#8d4de8}
+main{padding:14px}.screen{display:none}.screen.active{display:block}
+.card{background:#241d2d;border:1px solid #342b3d;border-radius:22px;padding:16px;margin-bottom:14px}
+.hero{padding:22px}.hero h1{font-size:29px;line-height:1.15;margin:0 0 10px}.hero p{opacity:.75;line-height:1.55}
+.btn{border:0;border-radius:15px;padding:13px 16px;font-weight:800;background:#8d4de8;color:white;width:100%;margin-top:8px}
+.btn.alt{background:#342a40}.row{display:flex;gap:10px}.row>*{flex:1}
+.avatar{height:170px;border-radius:20px;background:linear-gradient(135deg,#8d4de8,#e65f9a);display:grid;place-items:center;font-size:72px}
+label{display:block;font-size:13px;opacity:.75;margin:12px 0 6px}
+input,select,textarea{width:100%;border:1px solid #3b3245;background:#17131d;color:#fff;border-radius:13px;padding:12px;font:inherit}
+.chat{height:430px;overflow:auto;padding:10px;background:#15111b;border-radius:16px}
+.msg{max-width:82%;padding:10px 13px;border-radius:16px;margin:8px 0;line-height:1.45}
+.ai{background:#30253b}.me{background:#7c43cc;margin-left:auto}
+.chatbar{display:flex;gap:8px;margin-top:8px}.chatbar input{flex:1}.chatbar button{width:52px;border:0;border-radius:13px;background:#8d4de8;color:white}
+.small{font-size:12px;opacity:.65;line-height:1.5}
+.badge{display:inline-block;padding:5px 9px;border-radius:99px;background:#342a40;font-size:11px;margin:3px}
+footer{padding:20px 14px 30px;text-align:center;opacity:.5;font-size:11px}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div class="brand">💜 ಕನ್ನಡ Soulmate AI</div><div class="sub">ವೈಯಕ್ತಿಕ AI companion • Mobile-first MVP</div></header>
+<div class="tabs">
+<button class="active" onclick="show('home',this)">ಮುಖಪುಟ</button>
+<button onclick="show('chat',this)">ಚಾಟ್</button>
+<button onclick="show('profile',this)">ಪ್ರೊಫೈಲ್</button>
+</div>
+
+<main>
+<section id="home" class="screen active">
+<div class="card hero">
+<h1>ನಿನ್ನದೇ AI ಗೆಳತಿ</h1>
+<p>ಕನ್ನಡದಲ್ಲಿ ಮಾತನಾಡುವ, ನಿನ್ನ ಆಯ್ಕೆಯ personality ಹೊಂದಿರುವ virtual companion. ಇದು ಆರಂಭಿಕ prototype — AI/API ಸಂಪರ್ಕವನ್ನು ನಂತರ ಸೇರಿಸಬಹುದು.</p>
+<div><span class="badge">18+ ಮಾತ್ರ</span><span class="badge">ಕಾಲ್ ಇಲ್ಲ</span><span class="badge">ಕನ್ನಡ</span></div>
+<button class="btn" onclick="showById('chat')">ಚಾಟ್ ಆರಂಭಿಸಿ</button>
+</div>
+<div class="card">
+<h3>✨ Companion ರಚಿಸಿ</h3>
+<label>ಹೆಸರು</label><input id="cname" value="ನಂದಿನಿ">
+<label>Personality</label><select id="personality"><option>ಪ್ರೀತಿಯ ಮತ್ತು ಸ್ನೇಹಪರ</option><option>ಹಾಸ್ಯಮಯ</option><option>ಶಾಂತ ಮತ್ತು ಕಾಳಜಿಯ</option><option>ಆತ್ಮವಿಶ್ವಾಸಿ</option></select>
+<label>ಮಾತನಾಡುವ ಶೈಲಿ</label><select id="style"><option>ಸಹಜ ಕನ್ನಡ</option><option>ಕನ್ನಡ + English</option><option>ಸರಳ ಕನ್ನಡ</option></select>
+<button class="btn" onclick="saveCompanion()">ಉಳಿಸಿ</button>
+</div>
+<div class="card">
+<h3>🖼️ Character Image</h3>
+<div class="avatar">👩🏻</div>
+<p class="small">ಮುಂದಿನ ಹಂತದಲ್ಲಿ image-generation provider/API ಸಂಪರ್ಕಿಸಿ, ಈ characterಗೆ ಹೊಸ original ಚಿತ್ರಗಳನ್ನು ರಚಿಸುವ ವ್ಯವಸ್ಥೆ ಸೇರಿಸಬಹುದು.</p>
+<button class="btn alt" onclick="alert('Image generation integration is the next build step.')">ಚಿತ್ರ ರಚನೆ</button>
+</div>
+</section>
+
+<section id="chat" class="screen">
+<div class="card"><h3 id="chatTitle">ನಂದಿನಿಯೊಂದಿಗೆ ಚಾಟ್</h3>
+<div id="chatbox" class="chat"><div class="msg ai">ನಮಸ್ಕಾರ ❤️ ನಾನು ನಿನ್ನ AI companion. ಕನ್ನಡದಲ್ಲಿ ಮಾತನಾಡೋಣ.</div></div>
+<div class="chatbar"><input id="message" placeholder="ಇಲ್ಲಿ ಬರೆಯಿರಿ..." onkeydown="if(event.key==='Enter')send()"><button onclick="send()">➤</button></div>
+<p class="small">ಈ prototypeನಲ್ಲಿ reply demo ಮಾತ್ರ. ನಿಜವಾದ AI replyಗೆ API/backend ಸಂಪರ್ಕ ಅಗತ್ಯ.</p>
+</div>
+</section>
+
+<section id="profile" class="screen">
+<div class="card"><h3>👤 ನನ್ನ ಪ್ರೊಫೈಲ್</h3>
+<label>ಹೆಸರು</label><input id="username" placeholder="ನಿಮ್ಮ ಹೆಸರು">
+<label>ವಯಸ್ಸು</label><input id="age" type="number" min="18" placeholder="18+">
+<button class="btn" onclick="saveProfile()">ಪ್ರೊಫೈಲ್ ಉಳಿಸಿ</button>
+<p id="profileStatus" class="small"></p></div>
+<div class="card"><h3>🔒 Privacy</h3><p class="small">ಈ MVPನಲ್ಲಿ call feature ಇಲ್ಲ. ಖಾಸಗಿ ಬಳಕೆಗೆ ವಿನ್ಯಾಸ. ನಿಜವಾದ online deployment ಮಾಡುವ ಮೊದಲು authentication, secure database, reporting/blocking ಮತ್ತು age verification ಸೇರಿಸಬೇಕು.</p></div>
+</section>
+</main>
+<footer>Kannada Soulmate AI • Personal MVP • 18+ • No calls</footer>
+</div>
+<script>
+function show(id,btn){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('active'));if(btn)btn.classList.add('active')}
+function showById(id){show(id);document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('active'));if(id==='chat')document.querySelectorAll('.tabs button')[1].classList.add('active')}
+function saveCompanion(){let n=document.getElementById('cname').value||'ನಂದಿನಿ';localStorage.setItem('companion',n);document.getElementById('chatTitle').textContent=n+' ಜೊತೆ ಚಾಟ್';alert(n+' ರಚಿಸಲಾಗಿದೆ.')}
+function saveProfile(){let age=Number(document.getElementById('age').value);if(age<18){document.getElementById('profileStatus').textContent='ಈ app 18+ ಬಳಕೆದಾರರಿಗೆ ಮಾತ್ರ.';return}localStorage.setItem('username',document.getElementById('username').value);document.getElementById('profileStatus').textContent='ಪ್ರೊಫೈಲ್ ಉಳಿಸಲಾಗಿದೆ.'}
+function send(){let i=document.getElementById('message'),v=i.value.trim();if(!v)return;let b=document.getElementById('chatbox');b.innerHTML+=`<div class="msg me">${escapeHtml(v)}</div>`;i.value='';setTimeout(()=>{b.innerHTML+=`<div class="msg ai">ನಿನ್ನ message ಸಿಕ್ಕಿತು 😊 ನಿಜವಾದ AI ಸಂಪರ್ಕವನ್ನು ಮುಂದಿನ ಹಂತದಲ್ಲಿ ಸೇರಿಸಬಹುದು.</div>`;b.scrollTop=b.scrollHeight},350);b.scrollTop=b.scrollHeight}
+function escapeHtml(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+</script>
+</body></html>
