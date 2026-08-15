@@ -1,99 +1,76 @@
 // Kannada Soulmate AI - Mobile MVP
 
-// Screen navigation
 function show(id) {
-  document.querySelectorAll(".screen").forEach(function (x) {
-    x.classList.remove("active");
+  document.querySelectorAll(".screen").forEach(screen => {
+    screen.classList.remove("active");
   });
 
-  const screen = document.getElementById(id);
-  if (screen) {
-    screen.classList.add("active");
+  const target = document.getElementById(id);
+  if (target) {
+    target.classList.add("active");
   }
 }
 
-// Tab navigation
-function showById(id) {
+function showById(id, btn) {
   show(id);
 
-  document.querySelectorAll(".tabs button").forEach(function (x) {
-    x.classList.remove("active");
+  document.querySelectorAll(".tabs button").forEach(button => {
+    button.classList.remove("active");
   });
 
-  if (id === "chat") {
-    const buttons = document.querySelectorAll(".tabs button");
-    if (buttons[1]) buttons[1].classList.add("active");
-  }
-
-  if (id === "profile") {
-    const buttons = document.querySelectorAll(".tabs button");
-    if (buttons[2]) buttons[2].classList.add("active");
-  }
-
-  if (id === "home") {
-    const buttons = document.querySelectorAll(".tabs button");
-    if (buttons[0]) buttons[0].classList.add("active");
+  if (btn) {
+    btn.classList.add("active");
   }
 }
 
-
-// Save companion name
+// Save Companion
 function saveCompanion() {
-  const input = document.getElementById("cname");
+  const nameInput = document.getElementById("cname");
+  const name = nameInput ? nameInput.value.trim() : "";
 
-  if (!input) return;
-
-  const name = input.value.trim() || "ಸ್ನೇಹಾ";
+  if (!name) {
+    alert("ದಯವಿಟ್ಟು Companion ಹೆಸರು ನಮೂದಿಸಿ ❤️");
+    return;
+  }
 
   localStorage.setItem("companion", name);
 
-  alert(name + " ನಿಮ್ಮ AI companion ಆಗಿ ಉಳಿಸಲಾಗಿದೆ ❤️");
+  const status = document.getElementById("companionStatus");
+  if (status) {
+    status.textContent = name + " ನಿಮ್ಮ Companion ಆಗಿ save ಆಗಿದೆ ❤️";
+  }
+
+  alert("Companion save ಆಯಿತು ❤️");
 }
 
-
-// Save profile
+// Save Profile
 function saveProfile() {
   const ageInput = document.getElementById("age");
-  const status = document.getElementById("profileStatus");
+  const usernameInput = document.getElementById("username");
 
-  if (!ageInput) return;
+  const age = ageInput ? Number(ageInput.value) : 0;
+  const username = usernameInput ? usernameInput.value.trim() : "";
 
-  const age = Number(ageInput.value);
-
-  if (!age || age < 18) {
+  if (age < 18) {
+    const status = document.getElementById("profileStatus");
     if (status) {
-      status.textContent = "⚠️ ಈ app 18+ ಬಳಕೆದಾರರಿಗೆ ಮಾತ್ರ.";
+      status.textContent = "ಈ MVP 18+ ಬಳಕೆದಾರರಿಗೆ ಮಾತ್ರ.";
     }
     return;
   }
 
-  const username =
-    document.getElementById("username")?.value.trim() || "";
-
   localStorage.setItem("username", username);
   localStorage.setItem("age", age);
 
+  const status = document.getElementById("profileStatus");
   if (status) {
-    status.textContent = "✅ Profile saved successfully.";
+    status.textContent = "Profile save ಆಯಿತು ✅";
   }
+
+  alert("Profile save ಆಯಿತು ✅");
 }
 
-
-// Escape HTML
-function escapeHtml(str) {
-  return String(str).replace(/[&<>"']/g, function (m) {
-    return {
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#039;"
-    }[m];
-  });
-}
-
-
-// Send message
+// Send Chat Message
 function send() {
   const input = document.getElementById("message");
   const box = document.getElementById("chatbox");
@@ -108,106 +85,67 @@ function send() {
   const userMessage = document.createElement("div");
   userMessage.className = "msg user";
   userMessage.textContent = text;
-
   box.appendChild(userMessage);
 
   input.value = "";
 
   // Demo AI reply
-  setTimeout(function () {
-
-    const companion =
-      localStorage.getItem("companion") || "ಸ್ನೇಹಾ";
-
-    let reply = "";
-
-    const lower = text.toLowerCase();
-
-    if (
-      lower.includes("ಹಾಯ್") ||
-      lower.includes("ಹಾಯ್") ||
-      lower.includes("hello") ||
-      lower.includes("hi")
-    ) {
-      reply =
-        "ಹಾಯ್ 😊 ನಾನು " +
-        companion +
-        ". ನಿಮ್ಮ ಜೊತೆ ಮಾತನಾಡಲು ನನಗೆ ಸಂತೋಷ ❤️";
-    }
-
-    else if (
-      lower.includes("ಹೇಗಿದ್ದೀಯ") ||
-      lower.includes("ಹೇಗಿದ್ದೀಯಾ")
-    ) {
-      reply =
-        "ನಾನು ಚೆನ್ನಾಗಿದ್ದೇನೆ 😊 ನೀವು ಹೇಗಿದ್ದೀರಿ? ಇಂದು ನಿಮ್ಮ ದಿನ ಹೇಗಿತ್ತು?";
-    }
-
-    else if (
-      lower.includes("love") ||
-      lower.includes("ಪ್ರೀತಿ")
-    ) {
-      reply =
-        "ಪ್ರೀತಿ ಅಂದರೆ ಪರಸ್ಪರ ಗೌರವ, ನಂಬಿಕೆ ಮತ್ತು ಅರ್ಥಮಾಡಿಕೊಳ್ಳುವಿಕೆ ❤️";
-    }
-
-    else if (
-      lower.includes("sad") ||
-      lower.includes("ದುಃಖ") ||
-      lower.includes("ಬೇಸರ")
-    ) {
-      reply =
-        "ನಿಮಗೆ ಬೇಸರವಾಗಿರುವಂತೆ ಕಾಣುತ್ತಿದೆ 😌. ನೀವು ಬಯಸಿದರೆ ಏನಾಯಿತು ಎಂದು ನನ್ನ ಜೊತೆ ಹಂಚಿಕೊಳ್ಳಬಹುದು.";
-    }
-
-    else if (
-      lower.includes("good night") ||
-      lower.includes("ಶುಭ ರಾತ್ರಿ")
-    ) {
-      reply =
-        "ಶುಭ ರಾತ್ರಿ 🌙❤️ ಚೆನ್ನಾಗಿ ವಿಶ್ರಾಂತಿ ತೆಗೆದುಕೊಳ್ಳಿ.";
-    }
-
-    else {
-      reply =
-        "ನಾನು ಕೇಳುತ್ತಿದ್ದೇನೆ 😊 ನಿಮ್ಮ ಮಾತನ್ನು ಇನ್ನಷ್ಟು ತಿಳಿದುಕೊಳ್ಳಲು ಇಷ್ಟಪಡುತ್ತೇನೆ. ಮುಂದುವರಿಸಿ ❤️";
-    }
-
+  setTimeout(() => {
     const aiMessage = document.createElement("div");
     aiMessage.className = "msg ai";
-    aiMessage.innerHTML = escapeHtml(reply);
+
+    aiMessage.textContent =
+      "❤️ ನಾನು ಇಲ್ಲಿದ್ದೇನೆ. ನೀವು ಹೇಳುವುದನ್ನು ಗಮನದಿಂದ ಕೇಳುತ್ತೇನೆ. ಇನ್ನಷ್ಟು ಹೇಳಿ...";
 
     box.appendChild(aiMessage);
 
     box.scrollTop = box.scrollHeight;
-
   }, 600);
+
+  box.scrollTop = box.scrollHeight;
 }
 
-
-// Enter key support
+// Press Enter to Send
 document.addEventListener("DOMContentLoaded", function () {
 
-  const input = document.getElementById("message");
+  const message = document.getElementById("message");
 
-  if (input) {
-    input.addEventListener("keydown", function (event) {
-
+  if (message) {
+    message.addEventListener("keydown", function (event) {
       if (event.key === "Enter") {
         event.preventDefault();
         send();
       }
-
     });
   }
 
-  // Load saved companion
-  const savedName = localStorage.getItem("companion");
+  // Load saved Companion
+  const savedCompanion = localStorage.getItem("companion");
 
-  const cname = document.getElementById("cname");
+  if (savedCompanion) {
+    const cname = document.getElementById("cname");
+    if (cname) {
+      cname.value = savedCompanion;
+    }
+  }
 
-  if (savedName && cname) {
-    cname.value = savedName;
+  // Load saved Profile
+  const savedUsername = localStorage.getItem("username");
+  const savedAge = localStorage.getItem("age");
+
+  if (savedUsername) {
+    const username = document.getElementById("username");
+    if (username) {
+      username.value = savedUsername;
+    }
+  }
+
+  if (savedAge) {
+    const age = document.getElementById("age");
+    if (age) {
+      age.value = savedAge;
+    }
   }
 
 });
+ 
