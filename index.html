@@ -81,12 +81,7 @@ footer{padding:20px 14px 30px;text-align:center;opacity:.5;font-size:11px}
 </main>
 <footer>Kannada Soulmate AI • Personal MVP • 18+ • No calls</footer>
 </div>
-<script>
-function show(id,btn){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('active'));if(btn)btn.classList.add('active')}
-function showById(id){show(id);document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('active'));if(id==='chat')document.querySelectorAll('.tabs button')[1].classList.add('active')}
-function saveCompanion(){let n=document.getElementById('cname').value||'ನಂದಿನಿ';localStorage.setItem('companion',n);document.getElementById('chatTitle').textContent=n+' ಜೊತೆ ಚಾಟ್';alert(n+' ರಚಿಸಲಾಗಿದೆ.')}
-function saveProfile(){let age=Number(document.getElementById('age').value);if(age<18){document.getElementById('profileStatus').textContent='ಈ app 18+ ಬಳಕೆದಾರರಿಗೆ ಮಾತ್ರ.';return}localStorage.setItem('username',document.getElementById('username').value);document.getElementById('profileStatus').textContent='ಪ್ರೊಫೈಲ್ ಉಳಿಸಲಾಗಿದೆ.'}
-function send(){let i=document.getElementById('message'),v=i.value.trim();if(!v)return;let b=document.getElementById('chatbox');b.innerHTML+=`<div class="msg me">${escapeHtml(v)}</div>`;i.value='';setTimeout(()=>{b.innerHTML+=`<div class="msg ai">ನಿನ್ನ message ಸಿಕ್ಕಿತು 😊 ನಿಜವಾದ AI ಸಂಪರ್ಕವನ್ನು ಮುಂದಿನ ಹಂತದಲ್ಲಿ ಸೇರಿಸಬಹುದು.</div>`;b.scrollTop=b.scrollHeight},350);b.scrollTop=b.scrollHeight}
-function escapeHtml(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
-</script>
+ <script src="script.js"></script>
+</body>
+</html>
 </body></html>
