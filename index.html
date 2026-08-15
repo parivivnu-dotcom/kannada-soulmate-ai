@@ -63,11 +63,36 @@ footer{padding:20px 14px 30px;text-align:center;opacity:.5;font-size:11px}
 </section>
 
 <section id="chat" class="screen">
-<div class="card"><h3 id="chatTitle">ನಂದಿನಿಯೊಂದಿಗೆ ಚಾಟ್</h3>
-<div id="chatbox" class="chat"><div class="msg ai">ನಮಸ್ಕಾರ ❤️ ನಾನು ನಿನ್ನ AI companion. ಕನ್ನಡದಲ್ಲಿ ಮಾತನಾಡೋಣ.</div></div>
-<div class="chatbar"><input id="message" placeholder="ಇಲ್ಲಿ ಬರೆಯಿರಿ..." onkeydown="if(event.key==='Enter')send()"><button onclick="send()">➤</button></div>
-<p class="small">ಈ prototypeನಲ್ಲಿ reply demo ಮಾತ್ರ. ನಿಜವಾದ AI replyಗೆ API/backend ಸಂಪರ್ಕ ಅಗತ್ಯ.</p>
-</div>
+<section id="chat" class="screen">
+
+  <div class="card">
+    <h3>💬 ಕನ್ನಡದಲ್ಲಿ ಮಾತನಾಡಿ</h3>
+
+    <div id="chatbox" class="chat">
+      <div class="msg ai">
+        ❤️ ನಮಸ್ಕಾರ! ನಾನು ನಿಮ್ಮ Kannada Soulmate AI.
+        ನಿಮ್ಮ ಜೊತೆ ಮಾತನಾಡಲು ಸಿದ್ಧನಿದ್ದೇನೆ.
+      </div>
+    </div>
+
+    <div class="chatform">
+      <input
+        id="message"
+        type="text"
+        placeholder="ನಿಮ್ಮ message ಬರೆಯಿರಿ..."
+        autocomplete="off"
+      />
+
+      <button class="chatbar" onclick="send()">
+        ➤
+      </button>
+    </div>
+
+    <p class="small">
+      💜 ಇದು ಈಗ demo AI reply. ಮುಂದಿನ ಹಂತದಲ್ಲಿ ನಿಜವಾದ AI API connect ಮಾಡುತ್ತೇವೆ.
+    </p>
+  </div>
+
 </section>
 
 <section id="profile" class="screen">
