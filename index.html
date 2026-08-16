@@ -61,37 +61,100 @@ footer{padding:20px 14px 30px;text-align:center;opacity:.5;font-size:11px}
 <button class="btn alt" onclick="document.getElementById('characterImage').src='https://image.pollinations.ai/prompt/realistic_Indian_girl_with_expressive_eyes_and_friendly_smile?ts='+new Date().getTime()">ಹೊಸ ಚಿತ್ರ ರಚಿಸಿ</button
   
 </section>
+ <script>
 
-<section id="chat" class="screen">
-<section id="chat" class="screen">
+function show(id) {
+  document.querySelectorAll(".screen").forEach(function(screen) {
+    screen.classList.remove("active");
+  });
 
-  <div class="card">
-    <h3>💬 ಕನ್ನಡದಲ್ಲಿ ಮಾತನಾಡಿ</h3>
+  const screen = document.getElementById(id);
 
-    <div id="chatbox" class="chat">
-      <div class="msg ai">
-        ❤️ ನಮಸ್ಕಾರ! ನಾನು ನಿಮ್ಮ Kannada Soulmate AI.
-        ನಿಮ್ಮ ಜೊತೆ ಮಾತನಾಡಲು ಸಿದ್ಧನಿದ್ದೇನೆ.
-      </div>
-    </div>
+  if (screen) {
+    screen.classList.add("active");
+  }
+}
 
-    <div class="chatform">
-      <input
-        id="message"
-        type="text"
-        placeholder="ನಿಮ್ಮ message ಬರೆಯಿರಿ..."
-        autocomplete="off"
-      />
+function showById(id, button) {
+  show(id);
 
-      <button class="chatbar" onclick="send()">
-        ➤
-      </button>
-    </div>
+  document.querySelectorAll(".tabs button").forEach(function(btn) {
+    btn.classList.remove("active");
+  });
 
-    <p class="small">
-      💜 ಇದು ಈಗ demo AI reply. ಮುಂದಿನ ಹಂತದಲ್ಲಿ ನಿಜವಾದ AI API connect ಮಾಡುತ್ತೇವೆ.
-    </p>
-  </div>
+  if (button) {
+    button.classList.add("active");
+  }
+}
+
+function saveCompanion() {
+  const name = document.getElementById("cname").value.trim();
+
+  if (!name) {
+    alert("Companion ಹೆಸರು ನಮೂದಿಸಿ ❤️");
+    return;
+  }
+
+  localStorage.setItem("companion", name);
+  alert("Companion save ಆಯಿತು ❤️");
+}
+
+function saveProfile() {
+  const age = Number(document.getElementById("age").value);
+
+  if (age < 18) {
+    document.getElementById("profileStatus").textContent =
+      "ಈ app 18+ ಬಳಕೆದಾರರಿಗೆ ಮಾತ್ರ.";
+    return;
+  }
+
+  localStorage.setItem(
+    "username",
+    document.getElementById("username").value
+  );
+
+  localStorage.setItem("age", age);
+
+  document.getElementById("profileStatus").textContent =
+    "Profile save ಆಯಿತು ✅";
+}
+
+function send() {
+
+  const input = document.getElementById("message");
+  const box = document.getElementById("chatbox");
+
+  if (!input || !box) return;
+
+  const text = input.value.trim();
+
+  if (!text) return;
+
+  const user = document.createElement("div");
+  user.className = "msg user";
+  user.textContent = text;
+
+  box.appendChild(user);
+
+  input.value = "";
+
+  setTimeout(function() {
+
+    const reply = document.createElement("div");
+
+    reply.className = "msg ai";
+
+    reply.textContent =
+      "❤️ ನಾನು ಇಲ್ಲಿದ್ದೇನೆ. ನಿಮ್ಮ ಮಾತನ್ನು ಕೇಳುತ್ತಿದ್ದೇನೆ. ಇನ್ನಷ್ಟು ಹೇಳಿ...";
+
+    box.appendChild(reply);
+
+    box.scrollTop = box.scrollHeight;
+
+  }, 600);
+}
+
+ </script>
 
 </section>
 
